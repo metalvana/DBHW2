@@ -229,7 +229,11 @@ public class NetworkAnalysis {
 	   return result;
    }
    
+<<<<<<< Updated upstream
   //tets 
+=======
+   //testSiyi
+>>>>>>> Stashed changes
    public static ArrayList<ArrayList<Integer>> DiscoverCliques(int k, Connection conn){
 	   //construct 2d ArrayList, store all combinations
 	   ArrayList<ArrayList<Integer>> combResult = new ArrayList<ArrayList<Integer>>();
