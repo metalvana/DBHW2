@@ -170,14 +170,20 @@ public class NetworkAnalysis {
 	   return count;
    }
   
-   private void dfs(int[] a, int[] b, int rootNode,Connection conn) {
+   private void dfs(int[] a, int[] b, int rootNode,Connection conn, int step) {
 //       count++;
 //       marked[rootNode] = true;
 //       for (int w : nextNodes(rootNode,conn)){
 //           if (!marked[w]) {
-//               dfs(G, w);
+//               dfs(G, w, step+1);
 //           }
 //       }
+	   ArrayList<Struct>
+	   Struct{
+		   int steps;
+		   Integer Val;
+		   
+	   }
    }
 /*   public static int ReachabilityCount(int id, Connection conn){
 //	   int[] nodes=nextNodes(id,conn);
@@ -230,7 +236,7 @@ public class NetworkAnalysis {
 	   //construct the linked_table at first
 	   ArrayList<ArrayList<Integer>> linkTable = ConstructTable(conn);
 	   //construct the valid subgraphs(Cliques)
-	   ArrayList<ArrayList<Integer>> cliqueResult = new ArrayList<ArrayList<Integer>>;
+	   ArrayList<ArrayList<Integer>> cliqueResult = new ArrayList<ArrayList<Integer>>();
 	   
 	   try{
 		   //Execute a query
@@ -278,20 +284,14 @@ public class NetworkAnalysis {
 
 //*******************************************NetworkDiameter Start*******************************************
    public static int NetworkDiameter(int id, Connection conn){
-//	   //Execute a query
-//	   String sql = "SELECT EndNodeID FROM roadNet_CA";
-//	   String sql2 = "SELECT FromNodeID FROM roadNet_CA";
-//	   ResultSet rs = conn.createStatement().executeQuery(sql);
-//	   ResultSet rs2 = conn.createStatement().executeQuery(sql2);
+	   int resultDia = 0;
+	   //construct the linked_table at first
+	   ArrayList<ArrayList<Integer>> linkTable = ConstructTable(conn);
 	   
 	   try{
 		   //Execute a query
 		   String fromSqlDis = "SELECT DISTINCT FromNodeId FROM roadNet_CA";
-		   String fromSql = "SELECT FromNodeId FROM roadNet_CA";
-		   String endSql = "SELECT EndNodeId FROM roadNet_CA";
 		   ResultSet fromDisSet = conn.createStatement().executeQuery(fromSqlDis);
-		   ResultSet fromSet = conn.createStatement().executeQuery(fromSql);
-		   ResultSet endSet = conn.createStatement().executeQuery(endSql);
 		   
 		   //calculate the number of row; push empty rows to tmpResult
 		   fromDisSet.last(); Integer arrSize=fromDisSet.getRow(); fromDisSet.beforeFirst();
