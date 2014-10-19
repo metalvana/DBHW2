@@ -169,22 +169,34 @@ public class NetworkAnalysis {
 	 }
 	   return count;
    }
-  
-   private void dfs(int[] a, int[] b, int rootNode,Connection conn, int step) {
-//       count++;
-//       marked[rootNode] = true;
-//       for (int w : nextNodes(rootNode,conn)){
-//           if (!marked[w]) {
-//               dfs(G, w, step+1);
-//           }
-//       }
-	   ArrayList<Struct>
-	   Struct{
-		   int steps;
-		   Integer Val;
-		   
-	   }
+
+   private static void (ArrayList<ArrayList<Integer>> nodeTable, int rootNode) {
+	   
+	   ArrayList <Integer> neighbor = nodeTable.get(rootNode);
+
+	   if (neighbor.size()>0) {
+	       visited [rootNode] = true;
+	       
+	       for (int w : neighbor){
+	           if (!visited[w]) {
+	        	   count++;
+	               dfs(nodeTable, w);	     
+	           }
+	       }
+	   }  
+       return;
    }
+
+   public static int ReachabilityCount(int id, Connection conn){
+	   ArrayList<ArrayList<Integer>> nodeTable;
+	   nodeTable = constructTable(conn);
+	   count=0;
+	   dfs(nodeTable,id);
+	   System.out.print(count); 
+	   
+	   return count;
+   }
+  
 /*   public static int ReachabilityCount(int id, Connection conn){
 //	   int[] nodes=nextNodes(id,conn);
 //	   ArrayList reachableNodes=new ArrayList();
