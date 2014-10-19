@@ -320,6 +320,8 @@ public class NetworkAnalysis {
 	   int visitBFS[size] = {0};
 	   
 	   //doing BFS
+	   for(int i = 0; i < size; i)
+	   Queue<Integer> nodeQ;
 	   
 	   
    }
