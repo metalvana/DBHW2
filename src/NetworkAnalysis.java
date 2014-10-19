@@ -229,7 +229,7 @@ public class NetworkAnalysis {
 	   return result;
    }
    
-   
+  //tets 
    public static ArrayList<ArrayList<Integer>> DiscoverCliques(int k, Connection conn){
 	   //construct 2d ArrayList, store all combinations
 	   ArrayList<ArrayList<Integer>> combResult = new ArrayList<ArrayList<Integer>>();
