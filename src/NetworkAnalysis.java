@@ -204,22 +204,115 @@ public class NetworkAnalysis {
 	   return 0;
    }*/
    
+   
+//********************************Combination Helper Functions for Discover Cliques*************************
+   public static void combineFunc_helper(ArrayList<ArrayList<Integer>> result, ArrayList<Integer> fromList, int start, ArrayList<Integer> tmpResult, int target){
+	   if(tmp.size() == k) result.add(tmp);
+	   else{
+		   for(int i = start; i < n-target+1; i++){
+			   ArrayList<Integer> tmp = (ArrayList<Integer>) tmpResult.clone();
+			   tmp.add(fromList.get(i));
+			   combineFunc_helper(result, fromList, start, tmp, target-1);
+		   }
+	   }
+   }
+   
+   public static ArrayList<ArrayList<Integer>> combineFunc(ArrayList<Integer> fromList, int k){
+	   ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+	   combineFunc_helper(result, fromList, 0, new ArrayList<Integer>(), k);
+	   return result;
+   }
+   
+   
    public static ArrayList<ArrayList<Integer>> DiscoverCliques(int k, Connection conn){
-//	   ArrayList<ArrayList<Integer>> result;
-//	   //find all combinations
-//	   
-//	   
-//	   //verify the valid combination, delete if not valid
+	   //construct 2d ArrayList, store all combinations
+	   ArrayList<ArrayList<Integer>> combResult = new ArrayList<ArrayList<Integer>>();
+	   //construct the linked_table at first
+	   ArrayList<ArrayList<Integer>> linkTable = ConstructTable(conn);
+	   //construct the valid subgraphs(Cliques)
+	   ArrayList<ArrayList<Integer>> cliqueResult = new ArrayList<ArrayList<Integer>>;
+	   
+	   try{
+		   //Execute a query
+		   String fromSqlDis = "SELECT DISTINCT FromNodeId FROM roadNet_CA";
+		   ResultSet fromDisSet = conn.createStatement().executeQuery(fromSqlDis);
+		   
+		   //travel from set, get ArrayList of FromNode
+		   ArrayList<Integer> fromNodeList = new ArrayList<Integer>();
+		   while(fromDistSet.next()){
+			   fromNodeList.add(fromDisSet.getInt("FromNodeID"));
+		   }
+		   
+		   //find k-combination
+		   combResult = combineFunc(fromNodeList, k);
+		   
+		   //after getting combResult, go over the combResult and insert the valid combination
+		   for(int i = 0; i < combResult.size(); i++){
+			   boolean validComb = true;
+			   ArrayList<Integer> thisRow = combResult.get(i);
+			   for(int j = 0; j < thisRow.size(); j++){
+				   //Undirected!!!!!!!!!
+				   int rowVal = thisRow.get(i);
+				   for(int m = 0; m < thisRow.size() && m != j; m++){
+					   int tarVal = thisRow.get(m);
+					   if(linkTable[rowVal].indexOf(tarVal) == -1) validCom = false;
+				   }
+			   }
+			   if(validComb) cliqueTable.add(thisRow));
+		   }
+		   
+		 }catch(SQLException se){
+		   //Handle errors for JDBC
+		   se.printStackTrace();
+		 }
+	      
+	   return cliqueTable;
+	   
+	   //verify the valid combination, delete if not valid
 //	   return result;
    }
    
+//*******************************************Discover Cliques End********************************************
+
+   
+
+//*******************************************NetworkDiameter Start*******************************************
    public static int NetworkDiameter(int id, Connection conn){
 //	   //Execute a query
 //	   String sql = "SELECT EndNodeID FROM roadNet_CA";
 //	   String sql2 = "SELECT FromNodeID FROM roadNet_CA";
 //	   ResultSet rs = conn.createStatement().executeQuery(sql);
 //	   ResultSet rs2 = conn.createStatement().executeQuery(sql2);
+	   
+	   try{
+		   //Execute a query
+		   String fromSqlDis = "SELECT DISTINCT FromNodeId FROM roadNet_CA";
+		   String fromSql = "SELECT FromNodeId FROM roadNet_CA";
+		   String endSql = "SELECT EndNodeId FROM roadNet_CA";
+		   ResultSet fromDisSet = conn.createStatement().executeQuery(fromSqlDis);
+		   ResultSet fromSet = conn.createStatement().executeQuery(fromSql);
+		   ResultSet endSet = conn.createStatement().executeQuery(endSql);
+		   
+		   //calculate the number of row; push empty rows to tmpResult
+		   fromDisSet.last(); Integer arrSize=fromDisSet.getRow(); fromDisSet.beforeFirst();
+		   for(int i = 0; i < arrSize; i++){
+			   ArrayList<Integer> tmp = new ArrayList<Integer>();
+			   tmpResult.add(tmp);
+		   }
+		   
+		   //travel both fromSet and endSet, create hashTable
+		   while(fromSet.next() && endSet.next()){
+			   tmpResult.get(fromSet.getInt("FromNodeID")).add(endSet.getInt("EndNodeID"));
+		   }
+		   
+		   
+		 }catch(SQLException se){
+		   //Handle errors for JDBC
+		   se.printStackTrace();
+		 }
    }
+   
+//*******************************************NetwordDiameter End*********************************************
 
 }
 	
