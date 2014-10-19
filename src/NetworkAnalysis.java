@@ -211,7 +211,7 @@ public class NetworkAnalysis {
    }*/
    
    
-//********************************Combination Helper Functions for Discover Cliques*************************
+//********************************Combination Helper Functions for Discover Cliques******************************
    public static void combineFunc_helper(ArrayList<ArrayList<Integer>> result, ArrayList<Integer> fromList, int start, ArrayList<Integer> tmpResult, int target){
 	   if(tmp.size() == k) result.add(tmp);
 	   else{
